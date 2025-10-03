@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Food Ordering System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #e6f2ff; /* light pastel blue background */
+    }
+    .container {
+      display: inline-block;
+      text-align: left;
+      padding: 20px;
+      border: 2px solid #99c2ff;
+      border-radius: 12px;
+      background: #f0f8ff; /* softer pastel blue for box */
+      width: 340px;
+      box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #3366cc; /* darker pastel blue */
+    }
+    h2 {
+      color: #4d79ff;
+    }
+    button {
+      background-color: #99c2ff;
+      border: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #80b3ff;
+    }
+    ul {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Food Ordering System</h1>
+
+    <form id="orderForm">
+      <h2>Menu:</h2>
+      <label><input type="checkbox" name="items" value="Carbonara"> Carbonara - ₱120</label><br>
+      <label><input type="checkbox" name="items" value="Garlic Bread"> Garlic Bread - ₱50</label><br>
+      <label><input type="checkbox" name="items" value="Caesar Salad"> Caesar Salad - ₱100</label><br>
+      <label><input type="checkbox" name="items" value="Iced Tea"> Iced Tea - ₱80</label><br>
+      <label><input type="checkbox" name="items" value="Sparkling Water"> Sparkling Water - ₱60</label><br>
+
+      <h2>Customer Details:</h2>
+      <input type="text" id="name" placeholder="Enter your name" required><br><br>
+      <input type="text" id="address" placeholder="Enter your address" required><br><br>
+      <input type="text" id="contact" placeholder="Enter your contact number" required><br><br>
+
+      <button type="button" onclick="createOrder()">Create Order</button>
+    </form>
+
+    <div id="summary" style="display:none; margin-top:20px;">
+      <h2>Order Summary</h2>
+      <p><strong>Name:</strong> <span id="sName"></span></p>
+      <p><strong>Address:</strong> <span id="sAddress"></span></p>
+      <p><strong>Contact:</strong> <span id="sContact"></span></p>
+      <p><strong>Items Ordered:</strong></p>
+      <ul id="sItems"></ul>
+      <p><strong>Total:</strong> ₱<span id="sTotal"></span></p>
+    </div>
+  </div>
+
+  <script>
+    function createOrder() {
+      const menu = {
+        "Carbonara": 120,
+        "Garlic Bread": 50,
+        "Caesar Salad": 100,
+        "Iced Tea": 80,
+        "Sparkling Water": 60
+      };
+
+      let name = document.getElementById("name").value;
+      let address = document.getElementById("address").value;
+      let contact = document.getElementById("contact").value;
+
+      let items = document.querySelectorAll("input[name='items']:checked");
+      let total = 0;
+      let list = document.getElementById("sItems");
+      list.innerHTML = "";
+
+      items.forEach(item => {
+        let food = item.value;
+        let price = menu[food];
+        total += price;
+        let li = document.createElement("li");
+        li.textContent = food + " - ₱" + price;
+        list.appendChild(li);
+      });
+
+      document.getElementById("sName").textContent = name;
+      document.getElementById("sAddress").textContent = address;
+      document.getElementById("sContact").textContent = contact;
+      document.getElementById("sTotal").textContent = total;
+
+      document.getElementById("summary").style.display = "block";
+    }
+  </script>
+</body>
+</html>
